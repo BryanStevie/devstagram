@@ -11,6 +11,7 @@ use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PerfilController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,3 +58,10 @@ Route::get('/{user:username}', [PostController::class, 'index'])->name('posts.in
 //Siguiendo a Usuarios
 Route::post('/{user:username}/follow', [FollowerController::class, 'store'])->name('users.follow');
 Route::delete('/{user:username}/unfollow', [FollowerController::class, 'destroy'])->name('users.unfollow');
+
+
+Route::get('/run-migration', function () {
+    Artisan::call('optimize:clear');
+    Artisan::call('migrate:fresh --sedd');
+    return "Migrations executed seccessfully";
+});
